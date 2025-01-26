@@ -1,0 +1,22 @@
+{
+  "name": "spectra-backend",
+  "version": "1.0.0",
+  "description": "Enhancing User Experience in a Movie Database Website with MongoDB Atlas.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Neel-the-web-man/Spectra-backend.git"
+  },
+  "author": "",
+  "license": "AGPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/Neel-the-web-man/Spectra-backend/issues"
+  },
+  "homepage": "https://github.com/Neel-the-web-man/Spectra-backend#readme",
+  "dependencies": {
+    "mongodb": "^6.12.0"
+  }
+}
