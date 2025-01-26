@@ -4,7 +4,7 @@
   "description": "Enhancing User Experience in a Movie Database Website with MongoDB Atlas.",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node src/index.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/Neel-the-web-man/Spectra-backend#readme",
   "dependencies": {
-    "mongodb": "^6.12.0"
+    "dotenv": "^16.4.7",
+    "mongodb": "^6.12.0",
+    "ws": "^8.18.0"
   }
 }
