@@ -15,31 +15,10 @@ const client = new MongoClient(uri, {
 
 const wss = new WebSocketServer({ port: 8000 });
 
-const agg = [
-    {
-        $search: {
-            text: {
-                query: "Summer",
-                path: "title",
-            },
-        },
-    },
-    {
-        $limit: 5,
-    },
-
-    {
-        $project: {
-            _id: 0,
-            title: 1,
-        },
-    },
-];
-
 client
     .connect({ useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
-        const database = client.db("sample_mflix");
+        const database = client.db("opensoft_db");
         const movies = database.collection("movies");
 
         wss.on("connection", (ws, req) => {
@@ -51,10 +30,27 @@ client
                 if (data.t == "autoc") {
                     // execute search
                     console.log("searching");
+                    const result = await movies.aggregate([
+                        {
+                            $search: {
+                                index: "title_search",
+                                autocomplete: {
+                                    query: data.data,
+                                    path: "title",
+                                    fuzzy: { maxEdits: 1 },
+                                },
+                            },
+                        },
+                        { $limit: 10 },
+                        { $project: { _id: 0, title: 1, poster: 1 } },
+                    ]);
 
-                    let cursor = await movies.aggregate(agg);
-                    await cursor.forEach((doc) => console.log(doc));
-                    ws.send(JSON.stringify({ t: "autocreply", data: "hello" }));
+                    ws.send(
+                        JSON.stringify({
+                            t: "autocreply",
+                            data: await result.toArray(),
+                        })
+                    );
                 }
             });
         });
