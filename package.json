@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Enhancing User Experience in a Movie Database Website with MongoDB Atlas.",
   "main": "src/index.js",
+  "type": "module",
   "scripts": {
     "test": "node src/index.js"
   },
