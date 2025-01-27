@@ -31,7 +31,7 @@ client
                 },
             },
             { $limit: 10 },
-            { $project: { _id: 0, title: 1, poster: 1 } },
+            { $project: { _id: 1, title: 1, poster: 1 } },
         ];
         const result = await movies.aggregate(agg);
         await result.forEach((doc) => console.log(doc));

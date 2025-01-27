@@ -37,13 +37,18 @@ client
                                 autocomplete: {
                                     query: data.data,
                                     path: "title",
-                                    fuzzy: { maxEdits: 1 },
+                                    tokenOrder: "sequential",
+                                    fuzzy: { maxEdits: 1, prefixLength: 1 },
                                 },
                             },
                         },
                         { $limit: 10 },
-                        { $project: { _id: 0, title: 1, poster: 1 } },
+                        { $project: { _id: 1, title: 1, poster: 1 } },
                     ]);
+
+                    const resd = await result;
+                    console.log(resd);
+                    
 
                     ws.send(
                         JSON.stringify({
