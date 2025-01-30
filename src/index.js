@@ -1,5 +1,5 @@
 import { config } from "dotenv";
-import { MongoClient, ServerApiVersion } from "mongodb";
+import { MongoClient, ServerApiVersion, ObjectId } from "mongodb";
 import { WebSocketServer } from "ws";
 
 config();
@@ -21,13 +21,15 @@ client
         const database = client.db("opensoft_db");
         const movies = database.collection("movies");
 
-        wss.on("connection", (ws, req) => {
+        console.log("started");
+
+        wss.on("connection", (ws) => {
             // handle auth
             console.log("recv conn");
 
             ws.on("message", async (msg) => {
                 const data = JSON.parse(msg.toString());
-                if (data.t == "autoc") {
+                if (data.t == "autoc" && data.data) {
                     // execute search
                     console.log("searching");
                     const result = await movies.aggregate([
@@ -48,7 +50,6 @@ client
 
                     const resd = await result;
                     console.log(resd);
-                    
 
                     ws.send(
                         JSON.stringify({
@@ -56,6 +57,16 @@ client
                             data: await result.toArray(),
                         })
                     );
+                } else if (data.t == "info" && data.data) {
+                    console.log("recv for info");
+
+                    const id = new ObjectId(data.data);
+                    const document = await movies.findOne({
+                        _id: id,
+                    });
+                    ws.send(JSON.stringify({ t: "inforeply", data: document }));
+                    console.log('info sentF');
+                    
                 }
             });
         });
