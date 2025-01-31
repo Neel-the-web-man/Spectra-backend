@@ -1,13 +1,30 @@
-import 'dotenv/config'
+import "dotenv/config";
 import express from "express";
-// import connectDB from "./db/index.js";
-import { app } from './app.js';
-import { MongoClient, ServerApiVersion, ObjectId } from "mongodb";
+import connectDB from "./db/index.js";
+import { app } from "./app.js";
+import { MongoClient, ObjectId, ServerApiVersion } from "mongodb";
 import { WebSocketServer } from "ws";
 
+connectDB()
+    .then(() => {
+        app.listen(process.env.PORT || 8000, () => {
+            console.log(`Server is running on port: ${process.env.PORT}`);
+        });
+    })
+    .catch((err) => console.log("neel db error", err));
 
+const wss = new WebSocketServer({ port: 8001 });
 
-const wss = new WebSocketServer({ port: 8000 });
+const uri =
+    `mongodb+srv://r:${process.env.dbpassforr}@cluster.eomop.mongodb.net/?retryWrites=true&w=majority&appName=cluster`;
+
+const client = new MongoClient(uri, {
+    serverApi: {
+        version: ServerApiVersion.v1,
+        // strict: true,
+        deprecationErrors: true,
+    },
+});
 
 client
     .connect({ useNewUrlParser: true, useUnifiedTopology: true })
@@ -42,14 +59,11 @@ client
                         { $project: { _id: 1, title: 1, poster: 1 } },
                     ]);
 
-                    const resd = await result;
-                    console.log(resd);
-
                     ws.send(
                         JSON.stringify({
                             t: "autocreply",
                             data: await result.toArray(),
-                        })
+                        }),
                     );
                 } else if (data.t == "info" && data.data) {
                     console.log("recv for info");
@@ -59,8 +73,7 @@ client
                         _id: id,
                     });
                     ws.send(JSON.stringify({ t: "inforeply", data: document }));
-                    console.log('info sentF');
-
+                    console.log("info sentF");
                 }
             });
         });
