@@ -1,1 +1,1 @@
-export const DB_NAME = "MoviesDB";
+export const DB_NAME = "opensoft_db";
