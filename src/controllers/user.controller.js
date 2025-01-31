@@ -9,10 +9,8 @@ const generateAccessandRefreshTokens=async(userId)=>{
         const user=await User.findById(userId)
         const accessToken=user.generateAccessToken()
         const refreshToken=user.generateRefreshToken()
-        console.log("Generated new refreshToken: ",refreshToken);
         user.refreshToken=refreshToken
         await user.save({validateBeforeSave:false})
-        console.log(user);
         return {accessToken,refreshToken}
     }catch(err){
         throw new ApiError(500,"Something went wrong while generating refresh and access token")
@@ -126,7 +124,6 @@ const logoutUser = asyncHandler(async (req, res) => {
 
 const refreshAccessToken = asyncHandler(async (req, res) => {
     const incomingRefreshToken = req.cookies.refreshToken || req.body.refreshToken
-    console.log("refresh token",incomingRefreshToken);
     if (!incomingRefreshToken || incomingRefreshToken == undefined){
         throw new ApiError(401, "unauthorized request")
     }
@@ -152,8 +149,6 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
             secure: true
         }
         const {accessToken, refreshToken} = await generateAccessandRefreshTokens(user._id)
-        console.log("New AcessToken", accessToken);
-        console.log("New refreshToken", refreshToken);
         return res
         .status(200)
         .cookie("accessToken", accessToken, options)
