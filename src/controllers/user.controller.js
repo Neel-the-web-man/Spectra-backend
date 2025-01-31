@@ -164,29 +164,6 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
         throw new ApiError(401, error?.message || "Invalid refresh token");
     }
 
-    const options = {
-      httpOnly: true,
-      secure: true,
-    };
-    const { accessToken, refreshToken } = await generateAccessandRefreshTokens(
-      user._id,
-    );
-    console.log("New AcessToken", accessToken);
-    console.log("New refreshToken", refreshToken);
-    return res
-      .status(200)
-      .cookie("accessToken", accessToken, options)
-      .cookie("refreshToken", refreshToken, options)
-      .json(
-        new ApiResponse(
-          200,
-          { accessToken },
-          "Access token refreshed",
-        ),
-      );
-  } catch (error) {
-    throw new ApiError(401, error?.message || "Invalid refresh token");
-  }
 });
 
 const changeCurrentPassword = asyncHandler(async (req, res) => {
