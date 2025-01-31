@@ -10,29 +10,18 @@ import mongoose from "mongoose";
 import { Movie } from "./models/movie.model.js";
 
 connectDB()
-    .then(() => {
-        app.listen(process.env.PORT || 8000, () => {
-            console.log(`Server is running on port: ${process.env.PORT}`);
-        });
-    })
-    .catch((err) => console.log("neel db error", err));
+  .then(() => {
+    app.listen(process.env.PORT || 8000, () => {
+      console.log(`Server is running on port: ${process.env.PORT}`);
+    });
+  })
+  .catch((err) => console.log("neel db error", err));
 
 // const wss = new WebSocketServer({ port: 8001 });
-
-
-
-
-
-
-
-
-
-
 
 // const client = mongoose.connection.getClient();
 // const database = client.db("opensoft_db");
 // const movies = database.collection("movies");
-
 
 // const autocompleteMovies = async (searchTerm) => {
 
@@ -63,17 +52,6 @@ connectDB()
 //     return results;
 // };
 
-
-
-
-
-
-
-
-
-
-
-
 // const uri =
 //     `mongodb+srv://r:${process.env.dbpassforr}@cluster.eomop.mongodb.net/?retryWrites=true&w=majority&appName=cluster`;
 
@@ -91,16 +69,13 @@ connectDB()
 //         const database = client.db("opensoft_db");
 //         const movies = database.collection("movies");
 
-        
-        
-
 //         console.log("started");
 
 //         wss.on("connection", (ws) => {
 //             // handle auth
 //             console.log("recv conn");
 
-//             ws.on("message", async (msg) => {   
+//             ws.on("message", async (msg) => {
 //                 // console.log(await movies.findOne());
 //                 const data = JSON.parse(msg.toString());
 //                 if (data.t == "autoc" && data.data) {
