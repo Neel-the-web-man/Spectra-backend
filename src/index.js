@@ -10,29 +10,18 @@ import mongoose from "mongoose";
 import { Movie } from "./models/movie.model.js";
 
 connectDB()
-    .then(() => {
-        app.listen(process.env.PORT || 8000, () => {
-            console.log(`Server is running on port: ${process.env.PORT}`);
-        });
-    })
-    .catch((err) => console.log("neel db error", err));
+  .then(() => {
+    app.listen(process.env.PORT || 8000, () => {
+      console.log(`Server is running on port: ${process.env.PORT}`);
+    });
+  })
+  .catch((err) => console.log("neel db error", err));
 
 const wss = new WebSocketServer({ port: 8001 });
-
-
-
-
-
-
-
-
-
-
 
 // const client = mongoose.connection.getClient();
 // const database = client.db("opensoft_db");
 // const movies = database.collection("movies");
-
 
 // const autocompleteMovies = async (searchTerm) => {
 
