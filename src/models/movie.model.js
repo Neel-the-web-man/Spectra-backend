@@ -9,7 +9,7 @@ const movieSchema = new mongoose.Schema({
     director: String,
     cast: [String],
     genre: [String],
-    language: String
+    language: String,
 });
 
-export const Movie = mongoose.model('Movie', movieSchema);
+export const Movie = mongoose.model("Movie", movieSchema);

@@ -29,9 +29,9 @@ connectDB()
 
 
 
-    // const client = mongoose.connection.getClient();
-    // const database = client.db("opensoft_db");
-    // const movies = database.collection("movies");
+// const client = mongoose.connection.getClient();
+// const database = client.db("opensoft_db");
+// const movies = database.collection("movies");
 
 
 // const autocompleteMovies = async (searchTerm) => {
