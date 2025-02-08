@@ -13,9 +13,10 @@ const wss = new WebSocketServer({ port: 8090 });
 
 connectDB()
     .then(() => {
-        app.listen(process.env.PORT || 8000, () => {
-            console.log(`Server is running on port: ${process.env.PORT}`);
-        });
+        // app.listen(process.env.PORT || 8000, () => {
+        //     // console.log(`Server is running on port: ${process.env.PORT}`);
+        // });
+        app.listen(() => console.log(`Server running`));
     })
     .catch((err) => console.log("neel db error", err));
 
